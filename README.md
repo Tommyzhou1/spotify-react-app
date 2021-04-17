@@ -36,9 +36,8 @@ localhost:3000
 
 P.S. Sets the app to offline (loads faster)
 
-~~```
-~~serviceWorker.unregister()```~~ ``` -> serviceWorker.register()
-```
+~~serviceWorker.unregister()~~ -> serviceWorker.register()
+
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
