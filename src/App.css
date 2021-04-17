@@ -1,11 +1,28 @@
 .App {
+  height: 100%;
+  background-image: url("./spotify-bg.png");
+  background-position: cover;
+}
+.loginMenu{
+  height: 100%;
+  background-image: url("./spotify-bg.png");
+  background-position: cover;
 }
 
-.login {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
+.loginLogo {
+  width:450px;
+  height:200px;
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+}
+
+.loginBtn {
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
 }
 
 .Card {

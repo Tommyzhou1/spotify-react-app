@@ -1,4 +1,3 @@
-import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,13 +5,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import IconButton from '@material-ui/core/IconButton';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
+import logo from './spotify-logo.png';
+import loginBg from './spotify-bg.png';
 import React, { Component } from 'react';
 import './App.css';
 import fetchPlayer from './fetchPlayer';
@@ -33,16 +28,22 @@ class App extends Component {
     return isLoggedIn ? (
       <LoggedInScreen />
     ) : (
-      <div className="login">
-        <Button
-          variant="contained"
-          color="primary"
-          className={''}
-          onClick={this.handleLoginClick}
-        >
-          Log In With Spotify
-        </Button>
-      </div>
+      <React.Fragment>
+        <div className="loginMenu">
+          <img className = "loginLogo" src={logo} alt="Logo" />,
+          <div className="loginBtn">
+            <Button
+              variant="contained"
+              color="primary"
+              className={''}
+              onClick={this.handleLoginClick}
+            >
+              Log In With Your Account in Spotify
+            </Button>
+          </div>
+        </div>
+      </React.Fragment>
+      
     );
   }
 }
@@ -85,16 +86,6 @@ class LoggedInScreen extends Component {
     return true;
   }
 
-  handlePlayTopTracks = async () => {
-    const { items } = await spfetch('/v1/me/top/tracks');
-    this.state.player.play(items.map(({ uri }) => uri));
-  };
-
-  handlePlayPreviousTrack = () => this.state.player.previousTrack();
-  handlePlayNextTrack = () => this.state.player.nextTrack();
-  handleResume = () => this.state.player.resume();
-  handlePause = () => this.state.player.pause();
-
   render() {
     const {
       name,
@@ -119,53 +110,6 @@ class LoggedInScreen extends Component {
     return (
       <div className="App">
         <CssBaseline />
-
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" color="inherit">
-              {currentTrackName || 'Not playing anything'}
-            </Typography>
-
-            <div className="grow" />
-
-            <IconButton
-              color="inherit"
-              disabled={
-                !hasPlayer || !hasContext || !!skipPreviousRestrictedReason
-              }
-              onClick={this.handlePlayPreviousTrack}
-            >
-              <SkipPreviousIcon />
-            </IconButton>
-
-            {paused ? (
-              <IconButton
-                color="inherit"
-                disabled={!hasPlayer || !hasContext}
-                onClick={this.handleResume}
-              >
-                <PlayArrowIcon />
-              </IconButton>
-            ) : (
-              <IconButton
-                color="inherit"
-                disabled={!hasPlayer || !hasContext || !!pauseRestrictedReason}
-                onClick={this.handlePause}
-              >
-                <PauseIcon />
-              </IconButton>
-            )}
-
-            <IconButton
-              color="inherit"
-              disabled={!hasPlayer || !hasContext || !!skipNextRestrictedReason}
-              onClick={this.handlePlayNextTrack}
-            >
-              <SkipNextIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
         {name && (
           <Card className="Card">
             <CardActionArea>
