@@ -36,7 +36,7 @@ localhost:3000
 
 P.S. Sets the app to offline (loads faster)
 ```Index.js
-~~serviceWorker.unregister()~~ -> serviceWorker.register()
+<del>serviceWorker.unregister()</del> -> serviceWorker.register()
 ```
 
 ## Contributing
