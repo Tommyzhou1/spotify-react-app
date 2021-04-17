@@ -34,9 +34,17 @@ Runs on the local server
 localhost:3000
 ```
 
-P.S. Sets the app to offline (loads faster)
+P.S. Sets the app to offline (loads faster) in index.js
 
 ~~serviceWorker.unregister()~~ -> serviceWorker.register()
+
+##File Top-level Layout
+.
+├── public                  # Assets and template files
+├── src                     # Source files (alternatively `lib` or `app`)
+├── Dockerfile
+└── README.md
+
 
 
 ## Contributing
