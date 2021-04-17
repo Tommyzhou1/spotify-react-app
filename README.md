@@ -10,16 +10,10 @@ Use [git clone] to first clone the project from the github repo.
 git clone https://github.com/Tommyzhou1/spotify-react-app
 ```
 
-Change to the main folder of the project.
+Change to the main folder of the project and install the required packages
 
 ```bash
-cd main
-```
-
-Install the required packages by npm
-
-```bash
-npm install
+cd main && npm install
 ```
 
 ## Usage
