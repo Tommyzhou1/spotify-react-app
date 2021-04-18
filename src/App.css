@@ -25,9 +25,14 @@
   transform: translate(-50%, -50%);
 }
 
+.logoutBtn{
+  left:92.5%;
+  top:-390px;
+}
+
 .Card {
   width: 300px;
-  margin: 20px;
+  margin: 0px;
 }
 
 .CardMedia {

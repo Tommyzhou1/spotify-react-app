@@ -1,16 +1,13 @@
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import logo from './spotify-logo.png';
-import loginBg from './spotify-bg.png';
 import React, { Component } from 'react';
 import './App.css';
-import fetchPlayer from './fetchPlayer';
 import spfetch from './spfetch';
 
 class App extends Component {
@@ -49,29 +46,29 @@ class App extends Component {
 }
 
 class LoggedInScreen extends Component {
-  state = {
-    name: null,
-    href: null,
-    imageUrl: null,
-    numFollowers: null,
-    player: null,
-    playerState: {}
-  };
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      name: null,
+      href: null,
+      imageUrl: null,
+      numFollowers: null,
+      player: null,
+      logout: null,
+      playerState: {}
+    };
+
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+}
   async componentDidMount() {
     await this.getMe();
-    this.initPlayer();
   }
-
-  async initPlayer() {
-    // Let's fetch a connected player instance and also add it to `window` for debugging purposes
-    const player = (global.player = await fetchPlayer());
-    this.setState({ player });
-    player.addListener('player_state_changed', playerState =>
-      this.setState({
-        playerState
-      })
-    );
+  handleLogoutClick(){
+    spfetch.logout();
+    this.setState({
+      logout: "true"
+    })
   }
 
   async getMe() {
@@ -91,22 +88,10 @@ class LoggedInScreen extends Component {
       name,
       imageUrl,
       numFollowers,
-      player,
-      playerState: {
-        paused = true,
-        context,
-        track_window: { current_track: { name: currentTrackName } = {} } = {},
-        restrictions: {
-          disallow_pausing_reasons: [pauseRestrictedReason] = [],
-          disallow_skipping_prev_reasons: [skipPreviousRestrictedReason] = [],
-          disallow_skipping_next_reasons: [skipNextRestrictedReason] = []
-        } = {}
-      }
     } = this.state;
-
-    const hasPlayer = !!player;
-    const hasContext = context;
-
+    if(this.state.logout){
+      return <App />
+    }
     return (
       <div className="App">
         <CssBaseline />
@@ -121,17 +106,9 @@ class LoggedInScreen extends Component {
                 <Typography component="p">Followers: {numFollowers}</Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions>
-              <Button
-                size="small"
-                color="primary"
-                onClick={this.handlePlayTopTracks}
-              >
-                Play Top Tracks
-              </Button>
-            </CardActions>
           </Card>
         )}
+        <Button className="logoutBtn" variant="contained" onClick={this.handleLogoutClick}>Logout</Button>
       </div>
     );
   }

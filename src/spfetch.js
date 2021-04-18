@@ -17,7 +17,7 @@ const spfetch = (global.spfetch = async (input, init) => {
     }
   );
 
-  const { ok, status, statusText } = response;
+  const { ok, status } = response;
 
   let json = {};
   try {
