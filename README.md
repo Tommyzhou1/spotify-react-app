@@ -39,6 +39,9 @@ P.S. Sets the app to offline (loads faster) in index.js
     ├── Dockerfile
     └── README.md
 
+## Using Tech Stacks
+Redux, React, Node.js, docker, python
+
 
 
 ## Contributing
