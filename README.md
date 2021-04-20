@@ -42,7 +42,7 @@ P.S. Sets the app to offline (loads faster) in index.js
 ## Using Tech Stacks
 Redux, React, Node.js, docker, python
 
-
+![alt text](https://github.com/Tommyzhou1/spotify-react-app/blob/master/src/WireFrame.JPG)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
