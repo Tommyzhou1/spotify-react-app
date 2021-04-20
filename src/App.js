@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,9 +7,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import logo from './spotify-logo.png';
-import React, { Component } from 'react';
 import './App.css';
 import spfetch from './spfetch';
+import RadarChart from 'react-svg-radar-chart';
+import 'react-svg-radar-chart/build/css/index.css'
 
 class App extends Component {
   // We might be logged in on load if the token could be extracted from the url hash
@@ -54,17 +56,16 @@ class LoggedInScreen extends Component {
       href: null,
       imageUrl: null,
       numFollowers: null,
-      player: null,
       logout: null,
-      playerState: {}
     };
 
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
 }
+ 
   async componentDidMount() {
     await this.getMe();
   }
-  handleLogoutClick(){
+  async handleLogoutClick(){
     spfetch.logout();
     this.setState({
       logout: "true"
@@ -79,9 +80,10 @@ class LoggedInScreen extends Component {
       followers: { total: numFollowers }
     } = await spfetch('/v1/me');
 
-    this.setState({ name, href, imageUrl, numFollowers });
+    this.setState({ name, href, imageUrl, numFollowers});
     return true;
   }
+
 
   render() {
     const {
@@ -109,7 +111,34 @@ class LoggedInScreen extends Component {
           </Card>
         )}
         <Button className="logoutBtn" variant="contained" onClick={this.handleLogoutClick}>Logout</Button>
-      </div>
+        <div className = "radarChart">
+          <RadarChart
+            captions={{
+              // columns
+              battery: 'Battery Capacity',
+              design: 'Design',
+              useful: 'Usefulness',
+              speed: 'Speed',
+              weight: 'Weight'
+            }}
+            data={[
+              // data
+              {
+                data: {
+                  battery: 0.7,
+                  design: .8,
+                  useful: 0.9,
+                  speed: 0.67,
+                  weight: 0.8
+                },
+                meta: { color: '#58FCEC' }
+              },
+            ]}
+            size={400}
+    
+          />
+          </div>
+        </div>
     );
   }
 }
