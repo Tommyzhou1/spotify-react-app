@@ -4,7 +4,7 @@ spotify-react-app is a react app for evaluating the types of music you listen to
 
 ## Installation
 
-Use [git clone] to first clone the project from the github repo.
+Use [git clone] to first clone the project from github repo.
 
 ```bash
 git clone https://github.com/Tommyzhou1/spotify-react-app
