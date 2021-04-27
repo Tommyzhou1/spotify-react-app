@@ -3,11 +3,20 @@
   padding: 10px;
   background-image: url("./spotify-bg.png");
   background-position: cover;
+  background-repeat: repeat;
 }
 .loginMenu{
   height: 100%;
   background-image: url("./spotify-bg.png");
-  background-position: cover;
+  background-position: repeat;
+  
+}
+.radarChart{
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  transform: translate(-50%, -50%);
+  margin-bottom: 0px;
 }
 
 .loginLogo {

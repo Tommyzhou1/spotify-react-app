@@ -1,3 +1,4 @@
+import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -6,9 +7,10 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import { Avatar } from '@material-ui/core';
 import logo from './spotify-logo.png';
-import React, { Component } from 'react';
 import './App.css';
 import spfetch from './spfetch';
+import RadarChart from 'react-svg-radar-chart';
+import 'react-svg-radar-chart/build/css/index.css'
 
 class App extends Component {
   // We might be logged in on load if the token could be extracted from the url hash
@@ -54,7 +56,6 @@ class LoggedInScreen extends Component {
       href: null,
       imageUrl: null,
       numFollowers: null,
-      player: null,
       logout: null,
       playerState: {},
       timeInGreeting: null,
@@ -62,6 +63,7 @@ class LoggedInScreen extends Component {
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.getLocalTime = this.getLocalTime.bind(this);
 }
+ 
   async componentDidMount() {
     await this.getMe();
   }
@@ -102,6 +104,7 @@ class LoggedInScreen extends Component {
     this.getLocalTime();
     return true;
   }
+
 
   render() {
     const {
