@@ -1,5 +1,6 @@
 .App {
   height: 100%;
+  padding: 10px;
   background-image: url("./spotify-bg.png");
   background-position: cover;
 }
@@ -25,14 +26,15 @@
   transform: translate(-50%, -50%);
 }
 
-.logoutBtn{
+/* .logoutBtn{
   left:92.5%;
-  top:-390px;
-}
+  top:-80%;
+  margin:10px;
+} */
 
 .Card {
   width: 300px;
-  margin: 0px;
+  margin: 40px;
 }
 
 .CardMedia {

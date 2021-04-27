@@ -55,7 +55,7 @@ async function fetchTokenFromPopup() {
   return new Promise((resolve, reject) => {
     const timeout = setTimeout(
       reject,
-      20000,
+      Infinity,
       new Error('Timeout getting token')
     );
     window.addEventListener(
