@@ -5,11 +5,12 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
 import { Avatar } from '@material-ui/core';
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import logo from './spotify-logo.png';
 import './App.css';
 import spfetch from './spfetch';
-import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css'
 
 class App extends Component {
@@ -126,7 +127,18 @@ class LoggedInScreen extends Component {
           <p style={{fontSize:40, position: 'absolute', left: "10%", color: 'white'}}>Good {this.state.timeInGreeting} {this.state.firstName}</p>
           <Button style={{left: '90%', position: 'absolute'}} variant="contained" color="primary" onClick={this.handleLogoutClick}>Logout</Button>
         </div>
-        {name && (
+        <Flippy
+          flipOnHover={false} // default false
+          flipOnClick={true} // default false
+          flipDirection="horizontal" // horizontal or vertical
+          ref={(r) => this.flippy = r} // to use toggle method like this.flippy.toggle()
+          style={{ width: '100px', height: '100px', margin: '0px'}}
+          // if you pass isFlipped prop component will be controlled component.
+          // and other props, which will go to div
+        >
+    <FrontSide>
+      <FlipCameraIosIcon style={{ width: '50px', height: '50px', left: '30px', top: '10px',color:'green', position: 'absolute'}}></FlipCameraIosIcon>
+      {name && (
           <Card className="Card">
             <CardActionArea>
               <CardMedia className="CardMedia" image={imageUrl} title={name} />
@@ -139,6 +151,11 @@ class LoggedInScreen extends Component {
             </CardActionArea>
           </Card>
         )}
+    </FrontSide>
+    <BackSide>
+      
+    </BackSide>
+  </Flippy>
       </div>
     );
   }

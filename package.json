@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.58",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
+    "react-flippy": "^0.1.5",
     "react-scripts": "^4.0.3",
     "react-svg-radar-chart": "^1.2.0"
   },
