@@ -40,7 +40,7 @@ P.S. Sets the app to offline (loads faster) in index.js
     └── README.md
 
 ## Using Tech Stacks
-Redux, React, Node.js, docker, python, mongoDB
+Redux, React, Node.js, docker, python, dynamoDB, AWS amplify
 
 ## Wireframe
 ![alt text](https://github.com/Tommyzhou1/spotify-react-app/blob/master/src/WireFrame.JPG)
