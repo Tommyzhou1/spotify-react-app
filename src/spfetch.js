@@ -16,7 +16,6 @@ const spfetch = (global.spfetch = async (input, init) => {
         typeof init.body === 'object' ? JSON.stringify(init.body) : init.body
     }
   );
-
   const { ok, status } = response;
 
   let json = {};
@@ -34,7 +33,7 @@ const spfetch = (global.spfetch = async (input, init) => {
     accessToken = await fetchTokenFromPopup();
     return spfetch(input, init);
   }
-
+  console.log(json);
   return Object.assign(json, { ok, status });
 });
 

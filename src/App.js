@@ -109,6 +109,7 @@ class LoggedInScreen extends Component {
       followers: { total: numFollowers }
     } = await spfetch('/v1/me');
 
+    await spfetch('v1/me/top/tracks?time_range=short_term');
     this.setState({ name, href, imageUrl, numFollowers,firstName: (name.split(' '))[0]});
     this.getLocalTime();
     return true;
