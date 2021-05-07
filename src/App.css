@@ -35,22 +35,3 @@
   transform: translate(-50%, -50%);
 }
 
-/* .logoutBtn{
-  left:92.5%;
-  top:-80%;
-  margin:10px;
-} */
-
-.Card {
-  width: 300px;
-  margin: 40px;
-}
-
-.CardMedia {
-  width: 300px;
-  height: 300px;
-}
-
-.grow {
-  flex-grow: 1;
-}

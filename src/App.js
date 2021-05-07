@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
+import { withStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 import Flippy, { FrontSide, BackSide } from 'react-flippy';
 import logo from './spotify-logo.png';
 import './App.css';
 import spfetch from './spfetch';
+import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css'
+
+const LightTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[2],
+    fontSize: 15,
+  },
+}))(Tooltip);
 
 class App extends Component {
   // We might be logged in on load if the token could be extracted from the url hash
@@ -113,6 +121,45 @@ class LoggedInScreen extends Component {
       imageUrl,
       numFollowers,
     } = this.state;
+
+    const data = [
+      {
+        data: {
+          danceability: 0.7,
+          acoustic: .8,
+          loudness: 0.9,
+          energy: 0.67,
+          tempo: 0.8
+        },
+        meta: { color: 'blue' }
+      }
+    ];
+    const captions = {
+      // columns
+      danceability: 'danceability',
+      acoustic: 'acoustic',
+      loudness: 'loudness',
+      energy: 'energy',
+      tempo: 'tempo'
+    };
+    const customizedOptions = {
+      size: 200,
+      axes: true, // show axes?
+      dots: true, // show dots?
+      zoomDistance: 1.2, // where on the axes are the captions?
+      captionProps: () => ({
+        className: 'caption',
+        textAnchor: 'middle',
+        fontSize: 16,
+        fontFamily: 'sans-serif'
+      }),
+      dotProps: () => ({
+        className: 'dot',
+        mouseEnter: (dot) => { console.log(dot) },
+        mouseLeave: (dot) => { console.log(dot) }
+      })
+    };
+
     if(this.state.logout){
       return <App />
     }
@@ -132,30 +179,39 @@ class LoggedInScreen extends Component {
           flipOnClick={true} // default false
           flipDirection="horizontal" // horizontal or vertical
           ref={(r) => this.flippy = r} // to use toggle method like this.flippy.toggle()
-          style={{ width: '100px', height: '100px', margin: '0px'}}
-          // if you pass isFlipped prop component will be controlled component.
-          // and other props, which will go to div
+          style={{ width: '350px', height: '500px', margin: '50px', color: '191414'}}
         >
-    <FrontSide>
-      <FlipCameraIosIcon style={{ width: '50px', height: '50px', left: '30px', top: '10px',color:'green', position: 'absolute'}}></FlipCameraIosIcon>
-      {name && (
-          <Card className="Card">
-            <CardActionArea>
-              <CardMedia className="CardMedia" image={imageUrl} title={name} />
-              <CardContent >
-                <Typography gutterBottom variant="h5" component="h2" align="center">
-                  {name}
-                </Typography>
-                <Typography gutterBottom variant="h6" component="h5" align="center">Followers: {numFollowers}</Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
-        )}
-    </FrontSide>
-    <BackSide>
-      
-    </BackSide>
-  </Flippy>
+          <FrontSide
+              style={{
+                backgroundColor: '#1DB954',
+              }}   
+            >
+            <LightTooltip title="Flip The Profile Card To See More" placement="top-start" arrow>
+              <FlipCameraIosIcon style={{ width: '50px', height: '50px', left: '0px', top: '-5px',color:'green', position: 'absolute'}}></FlipCameraIosIcon>
+            </LightTooltip>
+            <img src={imageUrl} alt="description" style={{width: '320px', height: '350px'}}></img>
+            <div className = "bioWrapper" style={{top:"20px", position: 'relative'}}>
+              <Typography gutterBottom variant="h4" component="h2" align="center">
+                {name}
+              </Typography>
+              <Typography gutterBottom variant="h5" component="h5" align="center">Followers: {numFollowers}</Typography>
+            </div>
+          </FrontSide>
+          <BackSide
+            style={{
+              backgroundColor: '#1DB954',
+            }}   
+          >
+          <div className = "radarWrapper" style={{top:"80px", position: 'relative'}}>
+            <RadarChart
+              captions={captions}
+              data={data}
+              size={300}
+              options={customizedOptions}
+            />
+          </div>
+          </BackSide>
+        </Flippy>
       </div>
     );
   }
