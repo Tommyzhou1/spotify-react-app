@@ -68,12 +68,14 @@ class LoggedInScreen extends Component {
       logout: null,
       playerState: {},
       timeInGreeting: null,
+      musicTempoData: {}
     };
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.getLocalTime = this.getLocalTime.bind(this);
 }
  
   async componentDidMount() {
+    await this.getTracks();
     await this.getMe();
   }
 
@@ -109,37 +111,67 @@ class LoggedInScreen extends Component {
       followers: { total: numFollowers }
     } = await spfetch('/v1/me');
 
-    await spfetch('v1/me/top/tracks?time_range=short_term');
     this.setState({ name, href, imageUrl, numFollowers,firstName: (name.split(' '))[0]});
     this.getLocalTime();
     return true;
   }
 
+  async getTracks() {
+    let trackIDList = [], tempoDataList = {}, sumD = 0, sumT = 0, sumA = 0, sumE = 0, sumV = 0;
+    const{
+      items: trackList
+    } = await spfetch('v1/me/top/tracks?time_range=short_term');
+    trackList.forEach(element => {
+      trackIDList.push(element.id);
+    });
+    const{
+      audio_features: musicTempoList
+    } = await spfetch('v1/audio-features?ids=' + trackIDList.join('%2C'));
+    var normalized_musicTempoList = musicTempoList;
+    normalized_musicTempoList.forEach(element => {
+      element.tempo = Math.abs((element.tempo-100)/100);
+      sumD+=element.danceability;
+      sumT+=element.tempo;
+      sumA+=element.acousticness;
+      sumE+=element.energy;
+      sumV+=element.valence;
+    });
+    let length = normalized_musicTempoList.length;
+    tempoDataList["danceability"] = sumD/length;
+    tempoDataList["tempo"] = sumT/length;
+    tempoDataList["acousticness"] = sumA/length;
+    tempoDataList["energy"] = sumE/length;
+    tempoDataList["valence"] = sumV/length;
+
+    this.setState({musicTempoData:tempoDataList});
+
+    return true;
+  }
 
   render() {
     const {
       name,
       imageUrl,
       numFollowers,
+      musicTempoData
     } = this.state;
-
     const data = [
       {
         data: {
-          danceability: 0.7,
-          acoustic: .8,
-          loudness: 0.9,
-          energy: 0.67,
-          tempo: 0.8
+          danceability: parseFloat(musicTempoData['danceability']),
+          acoustic: parseFloat(musicTempoData['acousticness']),
+          valence: parseFloat(musicTempoData['valence']),
+          energy: parseFloat(musicTempoData['energy']),
+          tempo: parseFloat(musicTempoData['tempo'])
         },
-        meta: { color: 'blue' }
+        meta: { color: 'red' }
       }
     ];
     const captions = {
       // columns
       danceability: 'danceability',
       acoustic: 'acoustic',
-      loudness: 'loudness',
+      valence: 'valence',
       energy: 'energy',
       tempo: 'tempo'
     };
