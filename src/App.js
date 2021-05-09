@@ -96,6 +96,9 @@ class LoggedInScreen extends Component {
         this.setState({timeInGreeting: "Night"});
       }
   }
+  handleToolTip = dot =>{
+
+  }
 
   handleLogoutClick(){
     spfetch.logout();
@@ -192,18 +195,26 @@ class LoggedInScreen extends Component {
         mouseLeave: (dot) => { console.log(dot) }
       })
     };
-
+    let userAvatar = null, userImage = null;
+    if(imageUrl == null){
+      userAvatar =  <Avatar alt="Remy Sharp" style={{ height: '70px', width: '70px', margin: '20px'}}>{this.state.firstName}</Avatar>
+      userImage = <img alt="" style={{width: '320px', height: '350px'}}></img>
+    }
+    else{
+      userAvatar = <Avatar alt="Remy Sharp" src={imageUrl} style={{ height: '70px', width: '70px', margin: '20px'}}></Avatar>
+      userImage = <img src={imageUrl} alt={this.state.firstName} style={{width: '320px', height: '350px'}}></img>
+    }
     if(this.state.logout){
       return <App />
     }
-    return (
+    return name && (
       <div className="App"> 
         <div style={{
           display: 'flex',
           alignItems: 'center',
           flexWrap: 'wrap',
           }}> 
-          <Avatar alt="Remy Sharp" src={imageUrl} style={{ height: '70px', width: '70px', margin: '20px'}}></Avatar>
+          {userAvatar}
           <p style={{fontSize:40, position: 'absolute', left: "10%", color: 'white'}}>Good {this.state.timeInGreeting} {this.state.firstName}</p>
           <Button style={{left: '90%', position: 'absolute'}} variant="contained" color="primary" onClick={this.handleLogoutClick}>Logout</Button>
         </div>
@@ -222,7 +233,7 @@ class LoggedInScreen extends Component {
             <LightTooltip title="Flip The Profile Card To See More" placement="top-start" arrow>
               <FlipCameraIosIcon style={{ width: '50px', height: '50px', left: '0px', top: '-5px',color:'green', position: 'absolute'}}></FlipCameraIosIcon>
             </LightTooltip>
-            <img src={imageUrl} alt="description" style={{width: '320px', height: '350px'}}></img>
+            {userImage}
             <div className = "bioWrapper" style={{top:"20px", position: 'relative'}}>
               <Typography gutterBottom variant="h4" component="h2" align="center">
                 {name}
