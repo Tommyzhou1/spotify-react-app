@@ -35,3 +35,11 @@
   transform: translate(-50%, -50%);
 }
 
+.tooltip {
+  position: absolute;
+  transform: translate(-50%, -150%);
+  background-color: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 2px;
+}

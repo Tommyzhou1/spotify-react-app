@@ -25,7 +25,6 @@
       }
 
       queryParams.set('redirect_uri',   location.origin + location.pathname);
-      console.log(location.origin + location.pathname);
       queryParams.set('response_type', 'token');
 
       location.href = 'https://accounts.spotify.com/authorize?' + queryParams;

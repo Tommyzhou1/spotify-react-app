@@ -68,15 +68,19 @@ class LoggedInScreen extends Component {
       logout: null,
       playerState: {},
       timeInGreeting: null,
-      musicTempoData: {}
+      musicTempoData: {},
+      graphToolipValue:null
     };
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.getLocalTime = this.getLocalTime.bind(this);
+    this.handleToolTip = this.handleToolTip.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
 }
  
   async componentDidMount() {
     await this.getTracks();
     await this.getMe();
+    document.addEventListener('mousemove', this.handleMouseMove);
   }
 
   getLocalTime() {
@@ -96,8 +100,15 @@ class LoggedInScreen extends Component {
         this.setState({timeInGreeting: "Night"});
       }
   }
-  handleToolTip = dot =>{
 
+  handleMouseMove = e => {
+    this.mousePos = [e.pageX, e.pageY];
+  };
+
+  handleToolTip = dot =>{
+    this.setState({
+      graphToolipValue: dot.value
+    })
   }
 
   handleLogoutClick(){
@@ -156,7 +167,8 @@ class LoggedInScreen extends Component {
       name,
       imageUrl,
       numFollowers,
-      musicTempoData
+      musicTempoData,
+      graphToolipValue
     } = this.state;
     const data = [
       {
@@ -191,8 +203,8 @@ class LoggedInScreen extends Component {
       }),
       dotProps: () => ({
         className: 'dot',
-        mouseEnter: (dot) => { console.log(dot) },
-        mouseLeave: (dot) => { console.log(dot) }
+        mouseEnter: (dot) => { this.handleToolTip(dot) },
+        mouseLeave: (dot) => { this.handleToolTip(dot) }
       })
     };
     let userAvatar = null, userImage = null;
@@ -247,12 +259,21 @@ class LoggedInScreen extends Component {
             }}   
           >
           <div className = "radarWrapper" style={{top:"80px", position: 'relative'}}>
+            
             <RadarChart
               captions={captions}
               data={data}
               size={300}
               options={customizedOptions}
             />
+             {graphToolipValue && (
+                <div
+                  className="tooltip"
+                  style={{ left: this.mousePos[0]-30, top: this.mousePos[1]-220,position:'absolute' }}
+                >
+                {parseFloat(graphToolipValue).toFixed(3)}
+                </div>
+              )}
           </div>
           </BackSide>
         </Flippy>
