@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
+import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
-import { Avatar } from '@material-ui/core';
-import Flippy, { FrontSide, BackSide } from 'react-flippy';
-import logo from './spotify-logo.png';
+import { Avatar} from '@material-ui/core';
+import FlipCameraIosIcon from '@material-ui/icons/FlipCameraIos';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import './App.css';
+import logo from './spotify-logo.png';
 import spfetch from './spfetch';
 import RadarChart from 'react-svg-radar-chart';
 import 'react-svg-radar-chart/build/css/index.css'
+import Flippy, { FrontSide, BackSide } from 'react-flippy';
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
@@ -161,7 +168,6 @@ class LoggedInScreen extends Component {
 
     return true;
   }
-
   render() {
     const {
       name,
@@ -170,6 +176,26 @@ class LoggedInScreen extends Component {
       musicTempoData,
       graphToolipValue
     } = this.state;
+    const cards = [
+      {
+        id: 1,
+        name: "Leanne Graham",
+        username: "Bret",
+        email: "Sincere@april.biz"
+      },
+      {
+        id: 2,
+        name: "Tommy Zhou",
+        username: "Bret",
+        email: "Sincere@april.biz"
+      },
+      {
+        id: 3,
+        name: "Kevin Li",
+        username: "Bret",
+        email: "Sincere@april.biz"
+      },
+    ];
     const data = [
       {
         data: {
@@ -240,6 +266,7 @@ class LoggedInScreen extends Component {
           <FrontSide
               style={{
                 backgroundColor: '#1DB954',
+                borderRadius: '10px'
               }}   
             >
             <LightTooltip title="Flip The Profile Card To See More" placement="top-start" arrow>
@@ -256,6 +283,7 @@ class LoggedInScreen extends Component {
           <BackSide
             style={{
               backgroundColor: '#1DB954',
+              borderRadius: '10px'
             }}   
           >
           <div className = "radarWrapper" style={{top:"80px", position: 'relative'}}>
@@ -277,6 +305,18 @@ class LoggedInScreen extends Component {
           </div>
           </BackSide>
         </Flippy>
+        <div style={{display: 'flex',position: 'absolute', left: "50px", backgroundColor: '#1DB954',padding: '25px',borderRadius: '10px'}}>
+        <div style={{position: 'absolute', top: '-8px', left:'-8px'}}>
+        <IconButton aria-label="refresh">
+          <RefreshIcon fontSize="large"/>
+        </IconButton>
+        </div>
+        {cards.map(cards => (
+        <Card style={{padding:'10px',margin:'10px'}}>
+          {cards.name}
+          <CardMedia className="CardMedia" image={imageUrl} title={name} />
+        </Card>))}
+        </div>
       </div>
     );
   }

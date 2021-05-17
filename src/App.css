@@ -1,14 +1,12 @@
 .App {
-  height: 100%;
-  padding: 10px;
+  height: 150%;
   background-image: url("./spotify-bg.png");
-  background-position: cover;
   background-repeat: repeat;
 }
 .loginMenu{
   height: 100%;
   background-image: url("./spotify-bg.png");
-  background-position: repeat;
+  background-repeat: repeat;
   
 }
 .radarChart{
@@ -42,4 +40,8 @@
   color: white;
   padding: 5px 10px;
   border-radius: 2px;
+}
+.CardMedia {
+  width: 150px;
+  height: 150px;
 }
