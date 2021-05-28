@@ -1,6 +1,6 @@
 # spotify-react-app
 
-spotify-react-app is a react app for evaluating the types of music you listen to and make best recommendations out of it.
+spotify-react-app is a react-based app for evaluating the types of music you listen to and make best recommendations out of it.
 
 ## Installation
 
